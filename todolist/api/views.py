@@ -23,14 +23,14 @@ def apiOverview(request):
 
 @api_view(['GET'])
 def taskList(request):
-    tasks = Task.object.all()                       #Querying the Task object, saved as variable
-    serializer = TaskSerializer(task, many=True)    # Set serializer, passing in the tasks variable, and returning many responses
+    tasks = Task.objects.all()                       #Querying the Task object, saved as variable
+    serializer = TaskSerializer(tasks, many=True)    # Set serializer, passing in the tasks variable, and returning many responses
     return Response(serializer.data)
 
 @api_view(['GET'])
-def taskList(request):
-    tasks = Task.object.all()                       #Querying the Task object, saved as variable
-    serializer = TaskSerializer(task, many=True)    # Set serializer, passing in the tasks variable, and returning many responses
+def taskList(request, pk):
+    tasks = Task.objects.all()                       #Querying the Task object, saved as variable
+    serializer = TaskSerializer(tasks, many=True)    # Set serializer, passing in the tasks variable, and returning many responses
     return Response(serializer.data)
 
 @api_view(['POST'])
