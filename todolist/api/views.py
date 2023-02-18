@@ -21,18 +21,33 @@ def apiOverview(request):
 
     return Response(api_urls)
 
+#GET ALL
 @api_view(['GET'])
 def taskList(request):
     tasks = Task.objects.all()                       #Querying the Task object, saved as variable
     serializer = TaskSerializer(tasks, many=True)    # Set serializer, passing in the tasks variable, and returning many responses
     return Response(serializer.data)
 
+
+
+
+#VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+
+#SEARCH
 @api_view(['GET'])
-def taskList(request, pk):
-    tasks = Task.objects.all()                       #Querying the Task object, saved as variable
-    serializer = TaskSerializer(tasks, many=True)    # Set serializer, passing in the tasks variable, and returning many responses
+def taskDetail(request, pk):
+    task = Task.objects.get(id=pk)                        
+    serializer = TaskSerializer(task, many=False)    
     return Response(serializer.data)
 
+
+
+
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+#CREATE
 @api_view(['POST'])
 def taskCreate(request):
     serializer = TaskSerializer(data=request.data)
@@ -40,3 +55,5 @@ def taskCreate(request):
     if serializer.is_valid():
         serializer.save()    
     return Response(serializer.data)
+
+#UPDATE
